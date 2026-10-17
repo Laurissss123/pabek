@@ -1,0 +1,19 @@
+<meta charset=utf-8><meta name=viewport content="width=device-width"><body style="margin:0;background:#111;text-align:center"><canvas id=c width=320 height=180 style="width:100%;max-width:480px"></canvas><script>
+x=c.getContext('2d');y=v=s=d=0;o=[400];
+onpointerdown=()=>d?(y=v=s=d=0,o=[400]):y||(v=8);
+setInterval(()=>{
+if(!d){
+o=o.map(a=>a-3-s/20);
+if(o[0]<-12)o.shift(),s++;
+if(o[o.length-1]<250)o.push(320+Math.random()*150);
+y+=v;v-=.6;if(y<0)y=v=0;
+d=o.some(a=>a<56&&a>28&&y<20)
+}
+x.fillStyle='#d4161b';x.fillRect(0,0,320,180);
+x.fillStyle='#111';x.fillRect(0,140,320,40);
+o.map(a=>x.fillRect(a,118,12,22));
+x.fillStyle='#f6ecdd';x.fillRect(40,124-y,16,16);
+x.font='16px monospace';x.fillText(s,8,20);x.fillText('LAURYNAS',232,20);
+if(d)x.fillText('Baigta! Balsuok už Laurynų',16,80),x.fillText('(palieski ir bandyk dar)',40,104)
+},20)
+</script>
