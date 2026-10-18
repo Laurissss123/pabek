@@ -184,9 +184,8 @@ html.intro,html.intro body{overflow:hidden}
 .i-chest{position:relative;background:var(--c);color:var(--k);text-align:center;box-shadow:12px 12px 0 var(--r);padding:12px 0 0;animation:bump .45s 6.38s}
 .i-chest::before{content:"";position:absolute;left:50%;top:-5px;width:44%;height:12px;margin-left:-22%;background:var(--k)}
 .i-chest b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:min(18.5vw,118px);line-height:1.15;text-transform:uppercase;letter-spacing:1px}
-.i-chest em{font-style:normal;animation:glow .3s 6.4s forwards}
+.i-chest em{font-style:normal}
 @keyframes bump{30%{transform:scale(1.06,.93) rotate(-1.2deg)}65%{transform:scale(.98,1.03) rotate(.6deg)}}
-@keyframes glow{to{color:var(--r);text-shadow:0 0 14px var(--r),0 0 34px var(--r)}}
 .i-shock{position:absolute;left:50%;top:55%;width:40px;height:40px;margin:-20px 0 0 -20px;border:6px solid var(--c);border-radius:50%;opacity:0;animation:shock .9s 6.38s ease-out}
 @keyframes shock{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(42)}}
 .i-burst{position:absolute;left:50%;top:55%}
