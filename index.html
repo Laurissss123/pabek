@@ -30,7 +30,7 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 
 /* pagrindinis maketas */
 .home{display:grid;gap:34px}
-@media(min-width:980px){.home{grid-template-columns:1fr 520px;gap:56px;align-items:start}.left{position:sticky;top:24px}}
+@media(min-width:980px){.home{grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:48px;align-items:start}.left{position:sticky;top:24px}}
 .cut{display:none;height:min(52vh,470px);width:auto;margin-top:26px;filter:drop-shadow(calc((12 - var(--px,0)*8)*1px) calc((12 - var(--py,0)*8)*1px) 0 var(--k));cursor:pointer;animation:cutIn .9s .5s cubic-bezier(.2,1.2,.3,1) both,bob 5.5s 1.6s ease-in-out infinite}
 @media(min-width:980px){.cut{display:block}}
 
@@ -44,7 +44,7 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 .ballot header{padding:18px 0 6px}
 .ballot h2{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(34px,6vw,50px);line-height:1;text-transform:uppercase;margin:0}
 .ballot header p{margin:6px 0 0;font-size:13px;letter-spacing:3px;text-transform:uppercase}
-.cand{all:unset;box-sizing:border-box;display:grid;grid-template-columns:78px 1fr 64px;gap:14px;align-items:center;width:100%;padding:14px 0;border-bottom:3px solid var(--k);cursor:pointer;position:relative}
+.cand{all:unset;box-sizing:border-box;display:grid;grid-template-columns:78px 1fr 64px;gap:14px;align-items:center;width:100%;padding:10px 0;border-bottom:3px solid var(--k);cursor:pointer;position:relative}
 .cand:focus-visible{outline:4px solid var(--r);outline-offset:2px}
 .pic{width:78px;height:78px;background:var(--t);border:4px solid var(--k);overflow:hidden;display:flex;align-items:flex-end;justify-content:center}
 .pic img{height:112%;width:auto}
@@ -63,12 +63,12 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 .said{font-family:Anton,sans-serif;font-size:19px;text-transform:uppercase;letter-spacing:1px;padding:0;max-height:0;overflow:hidden;transition:max-height .35s,padding .35s}
 .said.on{max-height:90px;padding:12px 0 2px}
 .said b{font-weight:400;background:var(--k);color:var(--c);padding:2px 9px}
-.sec{font-size:12px;letter-spacing:5px;text-transform:uppercase;padding:20px 0 8px;display:flex;gap:10px;align-items:center}
+.sec{font-size:12px;letter-spacing:5px;text-transform:uppercase;padding:14px 0 7px;display:flex;gap:10px;align-items:center}
 .sec::after{content:"";flex:1;height:3px;background:var(--k)}
 .prog{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;padding:9px 0;font-size:15px;line-height:1.35}
 .prog i{width:26px;height:26px;border:4px solid var(--k);background:var(--k);color:var(--c);font:normal 17px/18px Anton,sans-serif;text-align:center}
 .prog b{font-family:Anton,sans-serif;font-weight:400;font-size:23px;text-transform:uppercase;display:block;line-height:1.1}
-.go{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;padding:14px 14px 14px 16px;margin:0 -6px 10px;border:5px solid var(--k);background:var(--c);box-shadow:6px 6px 0 var(--k);transition:transform .1s,box-shadow .1s,background .1s,color .1s}
+.go{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;padding:11px 14px 11px 16px;margin:0 -6px 10px;border:5px solid var(--k);background:var(--c);box-shadow:6px 6px 0 var(--k);transition:transform .1s,box-shadow .1s,background .1s,color .1s}
 .go:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--k);color:var(--c)}
 .go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--k)}
 .go strong{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(30px,5.4vw,40px);text-transform:uppercase;line-height:1}
@@ -167,14 +167,6 @@ button,a,.cand{touch-action:manipulation}
 .view{overflow-x:clip}
 #prog{position:fixed;left:0;top:0;right:0;height:7px;background:var(--c);border-bottom:3px solid var(--k);z-index:90;transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
 
-/* žymeklis */
-.curs{display:none}
-@media(pointer:fine){
-  .curs{display:block;position:fixed;left:-17px;top:-17px;width:34px;height:34px;border:3px solid var(--c);box-shadow:0 0 0 3px var(--k);transform:rotate(45deg);pointer-events:none;z-index:95;opacity:0;transition:opacity .2s,width .2s,height .2s,margin .2s,background .2s}
-  .curs.on{opacity:1}
-  .curs.big{width:56px;height:56px;margin:-11px 0 0 -11px;background:#11111180}
-  body.playing .curs{display:none}
-}
 .xs{position:fixed;width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;z-index:96;animation:xs .65s cubic-bezier(.2,1.2,.4,1) forwards}
 .xs svg{width:100%;height:100%;overflow:visible}
 @keyframes xs{0%{transform:scale(2.4) rotate(-20deg);opacity:0}25%{transform:scale(.9) rotate(4deg);opacity:1}70%{transform:scale(1) rotate(0);opacity:1}100%{transform:scale(1);opacity:0}}
@@ -219,6 +211,8 @@ body.playing .deco *,body.playing .tape div,html.intro .deco *{animation-play-st
 @keyframes fadeUp{from{transform:translateY(24px);opacity:0}}
 @keyframes cutIn{from{opacity:0;transform:translateY(70px) rotate(4deg)}}
 @keyframes bob{50%{translate:0 -10px}}
+.left{container-type:inline-size}
+.left h1{font-size:min(calc((100cqw - 30px)/6.7),118px)}
 h1 em{white-space:nowrap}
 h1 em b{display:inline-block;font-weight:inherit}
 h1 em:hover b{animation:wave .55s calc(var(--i)*38ms) both}
@@ -254,7 +248,7 @@ h1 em.jolt{animation:jolt .35s}
 
 /* ===== prisitaikymas: telefonas / planšetė / kompiuteris ===== */
 .w{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right));padding-bottom:max(60px,calc(30px + env(safe-area-inset-bottom)))}
-@media(min-width:1500px){.w{max-width:1360px}.home{grid-template-columns:1fr 620px}h1{font-size:clamp(46px,8vw,132px)}}
+@media(min-width:1500px){.w{max-width:1360px}.home{grid-template-columns:minmax(0,1fr) minmax(0,620px)}h1{font-size:clamp(46px,8vw,132px)}}
 @media(min-width:640px) and (max-width:979px){
   .home{max-width:780px;margin:0 auto}
   .left{display:grid;grid-template-columns:1.25fr .75fr;grid-template-areas:"e i" "h i" "l i";column-gap:14px;align-items:end;position:relative;top:auto}
@@ -270,7 +264,7 @@ h1 em.jolt{animation:jolt .35s}
 }
 @media(max-width:600px){
   .w{padding-top:22px}
-  h1{font-size:clamp(34px,12.2vw,64px)}
+  h1,.left h1{font-size:clamp(34px,12.2vw,64px)}
   .lead{font-size:16px}
   .pill{padding:14px 16px;font-size:13px;letter-spacing:2px}
   .stub,.sec,.eyebrow{font-size:12px;letter-spacing:3px}
@@ -304,6 +298,83 @@ h1 em.jolt{animation:jolt .35s}
   .ballot:hover{box-shadow:14px 14px 0 var(--k)}
 }
 @media(prefers-reduced-motion:reduce){.quote span,.quote em{clip-path:none}.rw.rv,.step.rv{transform:none}#wipe{display:none}}
+
+/* ===== dar daugiau judesio ===== */
+.topband{background:var(--k);color:var(--c);overflow:hidden;white-space:nowrap;border-bottom:4px solid var(--c);position:relative;z-index:2;padding-top:7px}
+.topband div{display:inline-block;padding:9px 0;font-family:Anton,sans-serif;font-size:15px;letter-spacing:3px;text-transform:uppercase;animation:tick 38s linear infinite}
+.topband span{margin:0 16px}
+.rain{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.rain i{position:absolute;top:-90px;left:var(--x);width:calc(var(--s)*1px);height:calc(var(--s)*1.35px);background:var(--c);border:3px solid var(--k);opacity:.5;display:block;animation:fall var(--t) linear var(--dl) infinite}
+.rain i::after{content:"✕";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 calc(var(--s)*.6px) Anton,sans-serif;color:var(--r)}
+@keyframes fall{0%{transform:translateY(0) rotate(var(--r0))}100%{transform:translateY(170vh) rotate(calc(var(--r0) + 400deg))}}
+.ballot{--sw:min(24vw,118px)}
+.ballot .stub{padding-right:calc(var(--sw) - 18px)}
+.spin{position:absolute;top:-52px;right:-12px;width:var(--sw);z-index:6;animation:spin 16s linear infinite;filter:drop-shadow(4px 4px 0 var(--k))}
+@keyframes spin{to{transform:rotate(360deg)}}
+.deco>*{translate:calc(var(--px,0)*var(--d,20)*1px) calc(var(--py,0)*var(--d,20)*1px + var(--sc,0)*var(--v,0)*1px)}
+.ballot>:not(.stamp):not(.spin){animation:rowIn .6s cubic-bezier(.2,.9,.2,1) both;animation-delay:calc(.55s + var(--i,0)*70ms)}
+@keyframes rowIn{from{opacity:0;transform:translateX(-26px)}}
+.nm strong{transition:translate .2s}
+.cand:hover .nm strong{translate:6px 0}
+.go:hover em{animation:nudge .6s ease-in-out infinite alternate}
+@keyframes nudge{to{transform:translateX(10px)}}
+.go.red{animation:wig 5s 3s ease-in-out infinite}
+@keyframes wig{0%,88%,100%{rotate:0deg}91%{rotate:-1.4deg}94%{rotate:1.2deg}97%{rotate:-.6deg}}
+.eyebrow::before{animation:grow 1s .3s both}
+@keyframes grow{from{width:0}}
+.progs{display:grid;gap:0}
+@media(min-width:560px){
+  .progs{grid-template-columns:repeat(3,1fr);gap:10px}
+  .prog{grid-template-columns:1fr;gap:8px;padding:6px 0 4px}
+  .prog b{font-size:20px}
+}
+@media(max-width:600px){.rain i:nth-child(n+7){display:none}.ballot{--sw:84px}.spin{top:-44px;right:4px}}
+.ballot>:nth-child(1){--i:1}
+.ballot>:nth-child(2){--i:2}
+.ballot>:nth-child(3){--i:3}
+.ballot>:nth-child(4){--i:4}
+.ballot>:nth-child(5){--i:5}
+.ballot>:nth-child(6){--i:6}
+.ballot>:nth-child(7){--i:7}
+.ballot>:nth-child(8){--i:8}
+.ballot>:nth-child(9){--i:9}
+.ballot>:nth-child(10){--i:10}
+.ballot>:nth-child(11){--i:11}
+.ballot>:nth-child(12){--i:12}
+.ballot>:nth-child(13){--i:13}
+.ballot>:nth-child(14){--i:14}
+.ballot>:nth-child(15){--i:15}
+.ballot>:nth-child(16){--i:16}
+.ballot>:nth-child(17){--i:17}
+.ballot>:nth-child(18){--i:18}
+.ballot>:nth-child(19){--i:19}
+.ballot>:nth-child(20){--i:20}
+
+/* ===== kompaktiškas lapelis kompiuteriui, kad matytųsi visas ===== */
+@media(min-width:980px){
+  .go small{display:none}
+  .progs{grid-template-columns:repeat(3,1fr);gap:6px}
+  .prog{grid-template-columns:28px 1fr;gap:8px;align-items:center;padding:2px 0}
+  .prog>div{font-size:0}
+  .prog b{font-size:19px}
+}
+@media(min-width:980px) and (max-height:900px){
+  .ballot header p{display:none}
+  .ballot h2{font-size:38px}
+  .ballot header{padding:10px 0 2px}
+  .stub{padding:9px 0}
+  .cand{grid-template-columns:62px 1fr 54px;padding:8px 0;gap:12px}
+  .pic{width:62px;height:62px}
+  .box{width:54px;height:54px}
+  .nm strong{font-size:30px}
+  .nm small{font-size:12px}
+  .sec{padding:10px 0 5px}
+  .go{padding:7px 12px 7px 14px;margin-bottom:8px}
+  .go strong{font-size:30px}
+  .go em{font-size:28px}
+  .cut-line{margin-top:6px;padding:10px 0 6px}
+  .said.on{padding:6px 0 0}
+}
 /* žaidimas */
 #game{position:fixed;inset:0;height:100vh;height:100dvh;z-index:50;background:#0a0204;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #game[hidden]{display:none}
@@ -333,14 +404,28 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
 </head>
 <body>
 <div id="prog" aria-hidden="true"></div>
-<div class="curs" id="curs" aria-hidden="true"></div>
+<div class="topband" aria-hidden="true"><div></div></div>
 <div id="wipe" aria-hidden="true"><i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i></div>
 
 <!-- ============ PAGRINDINIS ============ -->
 <main id="home" class="view">
   <div class="w home">
+    <div class="rain" aria-hidden="true">
+      <i style="--x:4%;--s:26;--t:17s;--dl:-3s;--r0:20deg"></i>
+      <i style="--x:13%;--s:34;--t:21s;--dl:-9s;--r0:-30deg"></i>
+      <i style="--x:24%;--s:22;--t:15s;--dl:-6s;--r0:50deg"></i>
+      <i style="--x:33%;--s:30;--t:19s;--dl:-1s;--r0:10deg"></i>
+      <i style="--x:44%;--s:38;--t:23s;--dl:-12s;--r0:-15deg"></i>
+      <i style="--x:53%;--s:24;--t:16s;--dl:-5s;--r0:70deg"></i>
+      <i style="--x:62%;--s:32;--t:20s;--dl:-14s;--r0:-45deg"></i>
+      <i style="--x:71%;--s:26;--t:18s;--dl:-8s;--r0:25deg"></i>
+      <i style="--x:80%;--s:36;--t:22s;--dl:-2s;--r0:-10deg"></i>
+      <i style="--x:88%;--s:24;--t:15s;--dl:-10s;--r0:40deg"></i>
+      <i style="--x:95%;--s:30;--t:19s;--dl:-4s;--r0:-60deg"></i>
+      <i style="--x:49%;--s:20;--t:14s;--dl:-7s;--r0:5deg"></i>
+    </div>
     <div class="deco" aria-hidden="true">
-      <div class="big" style="left:-6%;top:44%;--d:-14">GMT</div>
+      <div class="big" style="left:-6%;top:44%;--d:-14;--v:-.06">GMT</div>
       <div class="dots" style="right:-60px;top:-30px;--d:10"></div>
       <div class="sq" style="--s:90px;left:42%;top:8%;--d:26;--r0:12deg"></div>
       <div class="sq" style="--s:54px;left:6%;top:64%;--d:-20;--r0:-8deg"></div>
@@ -357,12 +442,13 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
 
     <article class="ballot" id="ballot">
       <div class="stamp" id="stamp" aria-hidden="true">Įskaityta</div>
+      <svg class="spin" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="cp2" d="M60,60 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0"/></defs><circle cx="60" cy="60" r="58" fill="#111" stroke="#F6ECDD" stroke-width="3"/><text font-family="Anton,sans-serif" font-size="12" fill="#F6ECDD"><textPath href="#cp2" textLength="212" lengthAdjust="spacing">BALSUOK ★ UŽ ★ LAURYNĄ ★ </textPath></text><polygon points="60.0,43.0 64.4,53.9 76.2,54.7 67.1,62.3 70.0,73.8 60.0,67.5 50.0,73.8 52.9,62.3 43.8,54.7 55.6,53.9" fill="#D4161B"/></svg>
       <div class="stub"><span>✂ GMT rinkimai</span><span>Nr. <b id="serial">0001</b></span></div>
       <header><h2>Balsavimo biuletenis</h2><p>Pažymėk vieną langelį</p></header>
 
       <button class="cand" id="candA" aria-pressed="false">
         <span class="pic"><img data-photo alt=""></span>
-        <span class="nm"><strong>Laurynas</strong><small>Naujokas. Kandidatas į GMT.</small></span>
+        <span class="nm"><strong>Laurynas</strong><small>Kandidatas į GMT.</small></span>
         <span class="box"><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M12 12 L48 48"/><path d="M48 12 L12 48"/></svg></span>
       </button>
       <button class="cand foil" id="candB" aria-pressed="false">
@@ -373,10 +459,12 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
       <div class="said" id="said" aria-live="polite"></div>
 
       <div class="sec">Programa</div>
+      <div class="progs">
       <div class="prog"><i style="--n:0">✕</i><div><b>Klausysiu</b>Perskaitysiu kiekvieną pasiūlymą.</div></div>
       <div class="prog"><i style="--n:1">✕</i><div><b>Darysiu</b>Pasirinksiu, ką galima įgyvendinti.</div></div>
       <div class="prog"><i style="--n:2">✕</i><div><b>Rodysiu</b>Viešai pasakysiu, ką padariau ir ko ne.</div></div>
 
+      </div>
       <div class="sec">Toliau</div>
       <a class="go red" href="#zaisti"><div><strong>Žaisti</strong><small>Greitas žaidimas. Pažiūrėk, ar tau seksis geriau nei man.</small><div class="lbt" id="lbt"></div></div><em>→</em></a>
       <a class="go" href="#apie"><div><strong>Mano puslapis</strong><small>Kas aš toks, ką darysiu ir kodėl man verta duoti balsą.</small></div><em>→</em></a>
@@ -394,7 +482,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
     <a class="back" href="#">← ATGAL</a>
     <div class="ab">
       <div class="deco" aria-hidden="true">
-        <div class="big" style="left:-4%;top:6%;--d:-12">NAUJOKAS</div>
+        <div class="big" style="left:-4%;top:6%;--d:-12">GMT</div>
         <div class="sq" style="--s:80px;right:6%;top:12%;--d:24;--r0:10deg"></div>
         <div class="xx" style="--s:96px;right:30%;top:46%;--d:-16"><svg viewBox="0 0 60 60"><path d="M8 8L52 52M52 8L8 52"/></svg></div>
         <div class="st" style="--s:40px;right:12%;top:64%;--d:26">★</div>
@@ -402,9 +490,9 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
       <aside><img class="cut" data-photo alt="Laurynas"></aside>
       <div>
         <div class="eyebrow">Kandidato anketa</div>
-        <h1><span class="ln"><span>Laurynas.</span></span><span class="ln"><span><em>Naujokas.</em></span></span></h1>
+        <h1><span class="ln"><span>Laurynas.</span></span><span class="ln"><span><em>Kandidatas.</em></span></span></h1>
         <dl class="form">
-          <div class="rw rv"><dt>01</dt><dd><b>Kas aš</b>Naujas čia. Bet kartais pakanka naujų akių, kad pamatytum tai, ko kiti nebemato.</dd></div>
+          <div class="rw rv"><dt>01</dt><dd><b>Kas aš</b>Pastebiu tai, ko kiti nebemato. Ir nepalieku to taip, kaip yra.</dd></div>
           <div class="rw rv"><dt>02</dt><dd>Matau, kas neveikia</dd></div>
           <div class="rw rv"><dt>03</dt><dd>Nemėgstu kalbėti be darbų</dd></div>
           <div class="rw rv"><dt>04</dt><dd>Daugiau netrukus</dd></div>
@@ -1226,13 +1314,14 @@ reset();
     wipeT=setTimeout(cb,560);setTimeout(()=>wipe.classList.remove('go'),1100);
   }
   const bar=$('#prog');
-  function prog(){const h=document.documentElement,m=h.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?Math.min(1,scrollY/m):0)+')'}
+  let scPend=false;
+  function prog(){const h=document.documentElement,m=h.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?Math.min(1,scrollY/m):0)+')';if(!scPend&&!RM){scPend=true;requestAnimationFrame(()=>{scPend=false;document.documentElement.style.setProperty('--sc',Math.round(scrollY))})}}
   addEventListener('scroll',prog,{passive:true});addEventListener('resize',prog);
   let cur=null;
   function applyView(name){
     home.hidden=name!=='home';apie.hidden=name!=='apie';
     const v=name==='apie'?apie:home;restart(v);reveal(v.id);
-    if(name==='home')renderTeaser();
+    if(name==='home'){renderTeaser();setTimeout(rollSerial,500)}
     scrollTo(0,0);prog();
   }
   function route(){
@@ -1279,26 +1368,33 @@ reset();
   if(!RM)setInterval(()=>{
     if(document.hidden)return;
     const em=document.querySelector('.view:not([hidden]) h1 em');
-    if(!em)return;em.classList.remove('jolt');void em.offsetWidth;em.classList.add('jolt');
-  },6500);
+    if(!em)return;
+    em.querySelectorAll('b').forEach((b,i)=>b.animate([{transform:'translateY(0)'},{transform:'translateY(-9%) rotate(-3deg)'},{transform:'translateY(0)'}],{duration:520,delay:i*45}));
+    setTimeout(()=>{em.classList.remove('jolt');void em.offsetWidth;em.classList.add('jolt')},1300);
+  },5200);
+
+  // biuletenio numerio "ridenimas"
+  function rollSerial(){
+    const el=$('#serial'),t=String(serial);
+    if(RM){el.textContent=t;return}
+    let n=0;const id=setInterval(()=>{
+      n++;el.textContent=[...t].map((d,i)=>n>(i+1)*5+4?d:Math.floor(Math.random()*10)).join('');
+      if(n>t.length*5+8){el.textContent=t;clearInterval(id)}
+    },55);
+  }
 
   // juostų tekstas
   const tp=['BALSUOK UŽ LAURYNĄ','★','MOKYKLA PATI SAVĘS NESUORGANIZUOS','★','KLAUSYSIU · DARYSIU · RODYSIU','★'];
   const tpl=tp.map(t=>'<span>'+t+'</span>').join('');
-  $$('.tape>div').forEach(d=>{d.innerHTML=tpl+tpl+tpl+tpl});
+  $$('.tape>div,.topband>div').forEach(d=>{d.innerHTML=tpl+tpl+tpl+tpl});
 
-  // žymeklis ir parallax (tik kompiuteriui)
+  // parallax pagal pelę (tik kompiuteriui)
   if(!coarse&&!RM){
-    let px=0,py=0,tx=-100,ty=-100,x=-100,y=-100,pend=false;
-    const c=$('#curs');
+    let pend=false,px=0,py=0;
     addEventListener('pointermove',e=>{
-      tx=e.clientX;ty=e.clientY;c.classList.add('on');
       px=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2;
       if(!pend){pend=true;requestAnimationFrame(()=>{pend=false;rootStyle.setProperty('--px',px.toFixed(3));rootStyle.setProperty('--py',py.toFixed(3))})}
     },{passive:true});
-    document.documentElement.addEventListener('pointerleave',()=>c.classList.remove('on'));
-    document.addEventListener('pointerover',e=>{c.classList.toggle('big',!!(e.target.closest&&e.target.closest('a,button,.cand,.cut')))});
-    (function loop(){x+=(tx-x)*.2;y+=(ty-y)*.2;c.style.translate=x+'px '+y+'px';requestAnimationFrame(loop)})();
     // magnetiniai mygtukai
     $$('.go,.pill,.back,.btn').forEach(el=>{
       el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.translate=((e.clientX-r.left-r.width/2)*.07)+'px '+((e.clientY-r.top-r.height/2)*.12)+'px'});
@@ -1354,7 +1450,7 @@ reset();
 
   // įžanga
   const introEl=$('#intro');let introT1,introT2;
-  function restartHome(){$$('#home h1 .ln>*, #home .ballot, #home .eyebrow, #home .lead, #home .cut, #home .prog i').forEach(restart)}
+  function restartHome(){$$('#home h1 .ln>*, #home .ballot, #home .ballot>*, #home .eyebrow, #home .lead, #home .cut, #home .prog i').forEach(restart);setTimeout(rollSerial,500)}
   function endIntro(fast){
     clearTimeout(introT1);clearTimeout(introT2);
     restartHome();
