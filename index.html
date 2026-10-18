@@ -31,7 +31,7 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 /* pagrindinis maketas */
 .home{display:grid;gap:34px}
 @media(min-width:980px){.home{grid-template-columns:1fr 520px;gap:56px;align-items:start}.left{position:sticky;top:24px}}
-.cut{display:none;height:min(52vh,470px);width:auto;margin-top:26px;filter:drop-shadow(12px 12px 0 var(--k))}
+.cut{display:none;height:min(52vh,470px);width:auto;margin-top:26px;filter:drop-shadow(calc((12 - var(--px,0)*8)*1px) calc((12 - var(--py,0)*8)*1px) 0 var(--k));cursor:pointer;animation:cutIn .9s .5s cubic-bezier(.2,1.2,.3,1) both,bob 5.5s 1.6s ease-in-out infinite}
 @media(min-width:980px){.cut{display:block}}
 
 /* ===== biuletenis ===== */
@@ -69,14 +69,13 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 .prog i{width:26px;height:26px;border:4px solid var(--k);background:var(--k);color:var(--c);font:normal 17px/18px Anton,sans-serif;text-align:center}
 .prog b{font-family:Anton,sans-serif;font-weight:400;font-size:23px;text-transform:uppercase;display:block;line-height:1.1}
 .go{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;padding:14px 14px 14px 16px;margin:0 -6px 10px;border:5px solid var(--k);background:var(--c);box-shadow:6px 6px 0 var(--k);transition:transform .1s,box-shadow .1s,background .1s,color .1s}
-.go:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--k);background:var(--k);color:var(--c)}
+.go:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--k);color:var(--c)}
 .go:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--k)}
 .go strong{font-family:Anton,sans-serif;font-weight:400;font-size:clamp(30px,5.4vw,40px);text-transform:uppercase;line-height:1}
 .go small{display:block;font-size:13px;line-height:1.3;margin-top:3px}
 .go em{font-style:normal;font-family:Anton,sans-serif;font-size:34px;transition:transform .2s}
 .go:hover em{transform:translateX(6px)}
 .go.red{background:var(--r);color:var(--c)}
-.go.red:hover{background:var(--k)}
 .lbt{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:5px;font-size:12px;letter-spacing:1px}
 .lbt b{font-family:Anton,sans-serif;font-weight:400;font-size:15px;letter-spacing:1px;background:var(--k);color:var(--c);padding:0 6px;margin-left:2px}
 .go:hover .lbt b{background:var(--r)}
@@ -114,9 +113,9 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 .acts .go{margin:0;box-shadow:8px 8px 0 var(--k)}
 .acts .go:hover{box-shadow:11px 11px 0 var(--k)}
 .acts .go.k{background:var(--c);color:var(--k)}
-.acts .go.k:hover{background:var(--k);color:var(--c)}
+.acts .go.k:hover{color:var(--c)}
 .acts .go:not(.k){background:var(--k);color:var(--c)}
-.acts .go:not(.k):hover{background:var(--c);color:var(--k)}
+.acts .go:not(.k):hover{color:var(--k)}
 .foot{margin-top:50px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;border-top:4px dashed var(--c);padding-top:18px;font-size:14px;line-height:1.5}
 .foot .pill{background:var(--c);color:var(--k);border-color:var(--c)}.foot .pill:hover{background:var(--k);color:var(--c)}
 
@@ -159,10 +158,156 @@ html.intro,html.intro body{overflow:hidden}
 @keyframes wipe{to{clip-path:circle(150vmax at 50% 55%)}}
 .i-skip{position:absolute;right:16px;top:16px;z-index:3;background:none;color:var(--c);border:3px solid var(--c);padding:9px 14px;font-size:12px;letter-spacing:3px;text-transform:uppercase}
 .i-skip:hover{background:var(--c);color:var(--k)}
+
+/* ===== papildomi efektai ===== */
+html{-webkit-text-size-adjust:100%}
+button,a,.cand{touch-action:manipulation}
+.left,.ballot{z-index:1}
+.home,.ab{position:relative}
+.view{overflow-x:clip}
+#prog{position:fixed;left:0;top:0;right:0;height:7px;background:var(--c);border-bottom:3px solid var(--k);z-index:90;transform-origin:0 50%;transform:scaleX(0);pointer-events:none}
+
+/* žymeklis */
+.curs{display:none}
+@media(pointer:fine){
+  .curs{display:block;position:fixed;left:-17px;top:-17px;width:34px;height:34px;border:3px solid var(--c);box-shadow:0 0 0 3px var(--k);transform:rotate(45deg);pointer-events:none;z-index:95;opacity:0;transition:opacity .2s,width .2s,height .2s,margin .2s,background .2s}
+  .curs.on{opacity:1}
+  .curs.big{width:56px;height:56px;margin:-11px 0 0 -11px;background:#11111180}
+  body.playing .curs{display:none}
+}
+.xs{position:fixed;width:64px;height:64px;margin:-32px 0 0 -32px;pointer-events:none;z-index:96;animation:xs .65s cubic-bezier(.2,1.2,.4,1) forwards}
+.xs svg{width:100%;height:100%;overflow:visible}
+@keyframes xs{0%{transform:scale(2.4) rotate(-20deg);opacity:0}25%{transform:scale(.9) rotate(4deg);opacity:1}70%{transform:scale(1) rotate(0);opacity:1}100%{transform:scale(1);opacity:0}}
+.cf{position:fixed;pointer-events:none;z-index:96}
+
+/* perėjimo užuolaida */
+#wipe{position:fixed;inset:0;z-index:98;display:flex;pointer-events:none}
+#wipe i{flex:1;background:var(--k);transform:translateY(101%)}
+#wipe i:nth-child(even){background:var(--c)}
+#wipe.go i{animation:wp .75s cubic-bezier(.7,0,.3,1) both;animation-delay:calc(var(--n)*40ms)}
+@keyframes wp{0%{transform:translateY(101%)}45%,55%{transform:translateY(0)}100%{transform:translateY(-101%)}}
+
+/* fono dekoracijos */
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.deco>*{position:absolute;translate:calc(var(--px,0)*var(--d,20)*1px) calc(var(--py,0)*var(--d,20)*1px);will-change:translate}
+.deco .sq{border:6px solid #F6ECDD38;width:var(--s);height:var(--s);animation:flt 9s ease-in-out infinite alternate}
+.deco .xx{width:var(--s);height:var(--s);animation:flt 11s ease-in-out infinite alternate-reverse}
+.deco .xx svg{width:100%;height:100%}
+.deco .xx path{fill:none;stroke:#F6ECDD38;stroke-width:8;stroke-linecap:square}
+.deco .st{font-family:Anton,sans-serif;font-size:var(--s);color:#F6ECDD55;animation:twk 3.5s ease-in-out infinite alternate}
+.deco .big{font-family:Anton,sans-serif;font-size:min(34vw,420px);line-height:.8;color:transparent;-webkit-text-stroke:3px #00000026;white-space:nowrap;animation:drift 26s linear infinite alternate}
+.deco .dots{width:380px;height:380px;background-image:radial-gradient(#111 28%,transparent 30%);background-size:18px 18px;opacity:.16;-webkit-mask-image:radial-gradient(circle,#000 25%,transparent 68%);mask-image:radial-gradient(circle,#000 25%,transparent 68%)}
+@keyframes flt{from{transform:translateY(-14px) rotate(var(--r0,0deg))}to{transform:translateY(18px) rotate(calc(var(--r0,0deg) + 16deg))}}
+@keyframes twk{from{transform:scale(.8) rotate(-10deg);opacity:.5}to{transform:scale(1.2) rotate(12deg);opacity:1}}
+@keyframes drift{from{transform:translateX(-4%)}to{transform:translateX(6%)}}
+body.playing .deco *,body.playing .tape div,html.intro .deco *{animation-play-state:paused}
+
+/* juostos */
+.tapes{position:relative;height:210px;overflow:hidden;margin-top:30px}
+.tape{position:absolute;left:-5%;width:110%;background:var(--k);color:var(--c);padding:12px 0;white-space:nowrap;overflow:hidden;font-family:Anton,sans-serif;font-size:28px;letter-spacing:3px;text-transform:uppercase}
+.tape.a{top:44px;transform:rotate(-3deg)}
+.tape.b{top:96px;transform:rotate(2.5deg);background:var(--c);color:var(--k)}
+.tape div{display:inline-block;animation:tick 30s linear infinite}
+.tape.b div{animation-direction:reverse}
+.tape span{margin:0 20px}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* antraštės judesys */
+.eyebrow{animation:slideR .7s .1s both}
+.lead{animation:fadeUp .8s .55s both}
+@keyframes slideR{from{transform:translateX(-40px);opacity:0}}
+@keyframes fadeUp{from{transform:translateY(24px);opacity:0}}
+@keyframes cutIn{from{opacity:0;transform:translateY(70px) rotate(4deg)}}
+@keyframes bob{50%{translate:0 -10px}}
+h1 em{white-space:nowrap}
+h1 em b{display:inline-block;font-weight:inherit}
+h1 em:hover b{animation:wave .55s calc(var(--i)*38ms) both}
+@keyframes wave{40%{transform:translateY(-7%) rotate(-3deg)}}
+h1 em.jolt{animation:jolt .35s}
+@keyframes jolt{20%{transform:translate(-5px,2px) skewX(-6deg)}40%{transform:translate(5px,-2px) skewX(5deg)}60%{transform:translate(-3px,1px)}}
+
+/* biuletenis */
+.ballot{transition:translate .25s,box-shadow .25s}
+.ballot:hover{translate:0 -6px;box-shadow:18px 20px 0 var(--k)}
+.prog i{animation:pop .45s cubic-bezier(.3,1.8,.5,1) both;animation-delay:calc(1.2s + var(--n,0)*.14s)}
+@keyframes pop{from{transform:scale(0) rotate(-90deg)}}
+.stamp{position:absolute;left:50%;top:21%;z-index:5;transform:translate(-50%,-50%) rotate(-14deg);opacity:0;border:8px solid var(--r);color:var(--r);background:#fffaf0d9;padding:4px 18px;
+  font-family:Anton,sans-serif;font-size:clamp(38px,8vw,60px);letter-spacing:4px;text-transform:uppercase;pointer-events:none;white-space:nowrap}
+.stamp.on{animation:stampIn 2.6s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes stampIn{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(3)}10%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(.92)}16%{transform:translate(-50%,-50%) rotate(-14deg) scale(1)}80%{opacity:.95}100%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
+.go{position:relative;overflow:hidden;transition:transform .1s,box-shadow .1s,color .25s,translate .2s}
+.go>*{position:relative;z-index:1}
+.go::before{content:"";position:absolute;inset:0;background:var(--k);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.7,0,.2,1);z-index:0}
+.go:hover::before{transform:scaleX(1)}
+.acts .go:not(.k)::before{background:var(--c)}
+.pill,.back,.btn{transition:transform .1s,background .15s,translate .2s}
+
+/* apie: atsiskleidimai */
+.quote span,.quote em{clip-path:inset(0 100% 0 0);transition:clip-path .9s cubic-bezier(.7,0,.2,1)}
+.why.in .quote span,.why.in .quote em{clip-path:inset(0 0 0 0)}
+.quote span:nth-child(2){transition-delay:.25s}.quote em{transition-delay:.5s}
+.rw.rv{transform:translateX(-46px)}
+.rw.rv.in{transform:none}
+.step.rv{transform:perspective(700px) rotateX(-38deg) translateY(30px);transform-origin:top}
+.step.rv.in{transform:none}
+.step.rv:nth-child(2){transition-delay:.12s}.step.rv:nth-child(3){transition-delay:.24s}
+
+/* ===== prisitaikymas: telefonas / planšetė / kompiuteris ===== */
+.w{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right));padding-bottom:max(60px,calc(30px + env(safe-area-inset-bottom)))}
+@media(min-width:1500px){.w{max-width:1360px}.home{grid-template-columns:1fr 620px}h1{font-size:clamp(46px,8vw,132px)}}
+@media(min-width:640px) and (max-width:979px){
+  .home{max-width:780px;margin:0 auto}
+  .left{display:grid;grid-template-columns:1.25fr .75fr;grid-template-areas:"e i" "h i" "l i";column-gap:14px;align-items:end;position:relative;top:auto}
+  .left .eyebrow{grid-area:e;align-self:start}
+  .left h1{grid-area:h;font-size:clamp(38px,7vw,68px)}
+  .left .lead{grid-area:l;align-self:start}
+  .left .cut{grid-area:i;display:block;height:min(46vw,360px);margin:0 0 0 auto;align-self:end}
+  .ballot{margin:0 auto;width:100%;max-width:700px}
+  .ab{grid-template-columns:250px 1fr;gap:34px}
+  .ab aside{position:sticky;top:20px}
+  .ab aside .cut{width:100%}
+  .tape{font-size:26px}
+}
+@media(max-width:600px){
+  .w{padding-top:22px}
+  h1{font-size:clamp(34px,12.2vw,64px)}
+  .lead{font-size:16px}
+  .pill{padding:14px 16px;font-size:13px;letter-spacing:2px}
+  .stub,.sec,.eyebrow{font-size:12px;letter-spacing:3px}
+  .go{padding:16px 12px 16px 14px}
+  .go em{font-size:30px}
+  .step{box-shadow:7px 7px 0 var(--k)}
+  .rw{grid-template-columns:62px 1fr;gap:6px 12px}
+  .rw dt{font-size:36px}
+  .tapes{height:170px}
+  .tape{font-size:21px;letter-spacing:2px}
+  .tape.a{top:34px}.tape.b{top:80px}
+  .deco .sq:nth-of-type(n+3),.deco .big,.deco .st:nth-of-type(2){display:none}
+  .foot{flex-direction:column;align-items:flex-start}
+  .stamp{top:17%}
+}
+@media(max-width:360px){
+  .cand{grid-template-columns:64px 1fr 56px;gap:10px}
+  .pic{width:64px;height:64px}
+  .box{width:56px;height:56px}
+}
+@media(max-height:520px) and (orientation:landscape){
+  .w{padding-top:14px;padding-bottom:30px}
+  h1{font-size:min(9vw,20vh)}
+  .cut,.deco .big{display:none!important}
+}
+@media(hover:none){
+  .go:hover::before{transform:scaleX(0)}
+  .go:active::before{transform:scaleX(1)}
+  .go:hover,.step:hover,.fact:hover,.ballot:hover{transform:none;translate:none}
+  .go:hover{box-shadow:6px 6px 0 var(--k)}
+  .ballot:hover{box-shadow:14px 14px 0 var(--k)}
+}
+@media(prefers-reduced-motion:reduce){.quote span,.quote em{clip-path:none}.rw.rv,.step.rv{transform:none}#wipe{display:none}}
 /* žaidimas */
-#game{position:fixed;inset:0;z-index:50;background:#0a0204;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#game{position:fixed;inset:0;height:100vh;height:100dvh;z-index:50;background:#0a0204;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #game[hidden]{display:none}
-#wrap{position:relative;width:min(100vw,calc(100vh*16/9));aspect-ratio:16/9;box-shadow:0 0 80px #d4161b66;container-type:inline-size}
+#wrap{position:relative;width:min(100vw,calc(100vh*16/9));width:min(100vw,calc(100dvh*16/9));aspect-ratio:16/9;box-shadow:0 0 80px #d4161b66;container-type:inline-size}
 #wrap canvas{width:100%;height:100%;display:block;background:#111;touch-action:none}
 #wrap::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 55%,#000a 100%),repeating-linear-gradient(0deg,#0000 0 2px,#0000002e 2px 3px)}
@@ -187,10 +332,22 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
 </script>
 </head>
 <body>
+<div id="prog" aria-hidden="true"></div>
+<div class="curs" id="curs" aria-hidden="true"></div>
+<div id="wipe" aria-hidden="true"><i style="--n:0"></i><i style="--n:1"></i><i style="--n:2"></i><i style="--n:3"></i><i style="--n:4"></i><i style="--n:5"></i><i style="--n:6"></i></div>
 
 <!-- ============ PAGRINDINIS ============ -->
 <main id="home" class="view">
   <div class="w home">
+    <div class="deco" aria-hidden="true">
+      <div class="big" style="left:-6%;top:44%;--d:-14">GMT</div>
+      <div class="dots" style="right:-60px;top:-30px;--d:10"></div>
+      <div class="sq" style="--s:90px;left:42%;top:8%;--d:26;--r0:12deg"></div>
+      <div class="sq" style="--s:54px;left:6%;top:64%;--d:-20;--r0:-8deg"></div>
+      <div class="xx" style="--s:110px;left:46%;top:58%;--d:18"><svg viewBox="0 0 60 60"><path d="M8 8L52 52M52 8L8 52"/></svg></div>
+      <div class="st" style="--s:46px;left:30%;top:36%;--d:30">★</div>
+      <div class="st" style="--s:30px;left:3%;top:22%;--d:-24">★</div>
+    </div>
     <section class="left">
       <div class="eyebrow">Laurynas · kandidatas į GMT</div>
       <h1><span class="ln"><span>Mokykla</span></span><span class="ln"><span>pati savęs</span></span><span class="ln"><span><em>nesuorganizuos.</em></span></span></h1>
@@ -199,6 +356,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
     </section>
 
     <article class="ballot" id="ballot">
+      <div class="stamp" id="stamp" aria-hidden="true">Įskaityta</div>
       <div class="stub"><span>✂ GMT rinkimai</span><span>Nr. <b id="serial">0001</b></span></div>
       <header><h2>Balsavimo biuletenis</h2><p>Pažymėk vieną langelį</p></header>
 
@@ -215,9 +373,9 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
       <div class="said" id="said" aria-live="polite"></div>
 
       <div class="sec">Programa</div>
-      <div class="prog"><i>✕</i><div><b>Klausysiu</b>Perskaitysiu kiekvieną pasiūlymą.</div></div>
-      <div class="prog"><i>✕</i><div><b>Darysiu</b>Pasirinksiu, ką galima įgyvendinti.</div></div>
-      <div class="prog"><i>✕</i><div><b>Rodysiu</b>Viešai pasakysiu, ką padariau ir ko ne.</div></div>
+      <div class="prog"><i style="--n:0">✕</i><div><b>Klausysiu</b>Perskaitysiu kiekvieną pasiūlymą.</div></div>
+      <div class="prog"><i style="--n:1">✕</i><div><b>Darysiu</b>Pasirinksiu, ką galima įgyvendinti.</div></div>
+      <div class="prog"><i style="--n:2">✕</i><div><b>Rodysiu</b>Viešai pasakysiu, ką padariau ir ko ne.</div></div>
 
       <div class="sec">Toliau</div>
       <a class="go red" href="#zaisti"><div><strong>Žaisti</strong><small>Greitas žaidimas. Pažiūrėk, ar tau seksis geriau nei man.</small><div class="lbt" id="lbt"></div></div><em>→</em></a>
@@ -227,6 +385,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
       <div class="cut-line"><span>Rašyk man pasiūlymus ar idėjas</span><span><button class="pill" data-replay>▶ ĮŽANGA</button> <button class="pill" data-share>↗ PASIDALINK</button></span></div>
     </article>
   </div>
+  <div class="tapes" aria-hidden="true"><div class="tape a"><div></div></div><div class="tape b"><div></div></div></div>
 </main>
 
 <!-- ============ APIE ============ -->
@@ -234,6 +393,12 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
   <div class="w">
     <a class="back" href="#">← ATGAL</a>
     <div class="ab">
+      <div class="deco" aria-hidden="true">
+        <div class="big" style="left:-4%;top:6%;--d:-12">NAUJOKAS</div>
+        <div class="sq" style="--s:80px;right:6%;top:12%;--d:24;--r0:10deg"></div>
+        <div class="xx" style="--s:96px;right:30%;top:46%;--d:-16"><svg viewBox="0 0 60 60"><path d="M8 8L52 52M52 8L8 52"/></svg></div>
+        <div class="st" style="--s:40px;right:12%;top:64%;--d:26">★</div>
+      </div>
       <aside><img class="cut" data-photo alt="Laurynas"></aside>
       <div>
         <div class="eyebrow">Kandidato anketa</div>
@@ -268,6 +433,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
 
     <div class="foot"><div>✂ Rašyk man pasiūlymus ar idėjas: <a href="mailto:uzlauryna@gmail.com">uzlauryna@gmail.com</a></div><button class="pill" data-share>↗ PASIDALINK</button></div>
   </div>
+  <div class="tapes" aria-hidden="true"><div class="tape a"><div></div></div><div class="tape b"><div></div></div></div>
 </main>
 
 <!-- ============ ŽAIDIMAS ============ -->
@@ -1023,7 +1189,11 @@ reset();
   A.addEventListener('click',()=>{
     const on=!A.classList.contains('on');
     setVote(on);store.set('laurynas-voted',on);
-    if(on&&navigator.vibrate)navigator.vibrate(40);
+    if(on){
+      if(navigator.vibrate)navigator.vibrate(40);
+      const r=A.querySelector('.box').getBoundingClientRect();
+      confetti(r.left+r.width/2,r.top+r.height/2,30);thunk();slamStamp();
+    }
   });
   B.addEventListener('click',()=>{
     B.classList.remove('nope');B.offsetWidth;B.classList.add('nope');
@@ -1046,27 +1216,43 @@ reset();
   const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15}):null;
   function reveal(root){$$('#'+root+' .rv').forEach(el=>{el.classList.remove('in');io?io.observe(el):el.classList.add('in')})}
 
-  // maršrutizavimas
+  // maršrutizavimas su "užuolaidos" perėjimu
+  const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   function restart(el){el.style.animation='none';el.offsetHeight;el.style.animation=''}
+  const wipe=$('#wipe');let wipeT;
+  function swap(cb){
+    if(RM){cb();return}
+    clearTimeout(wipeT);wipe.classList.remove('go');void wipe.offsetWidth;wipe.classList.add('go');
+    wipeT=setTimeout(cb,560);setTimeout(()=>wipe.classList.remove('go'),1100);
+  }
+  const bar=$('#prog');
+  function prog(){const h=document.documentElement,m=h.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?Math.min(1,scrollY/m):0)+')'}
+  addEventListener('scroll',prog,{passive:true});addEventListener('resize',prog);
+  let cur=null;
+  function applyView(name){
+    home.hidden=name!=='home';apie.hidden=name!=='apie';
+    const v=name==='apie'?apie:home;restart(v);reveal(v.id);
+    if(name==='home')renderTeaser();
+    scrollTo(0,0);prog();
+  }
   function route(){
-    const h=location.hash;
-    if(h==='#zaisti'){
+    const h=location.hash,target=h==='#zaisti'?'game':h==='#apie'?'apie':'home';
+    if(target===cur)return;
+    if(target==='game'){
       home.hidden=apie.hidden=true;game.hidden=false;document.body.classList.add('playing');
       GAME.open();
       if(coarse&&document.documentElement.requestFullscreen){
         document.documentElement.requestFullscreen().then(()=>screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape')).catch(()=>{});
       }
-      return;
+      cur='game';return;
     }
-    if(!game.hidden){
+    const wasGame=cur==='game';
+    if(wasGame){
       GAME.close();game.hidden=true;document.body.classList.remove('playing');
       if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});
     }
-    const showApie=h==='#apie';
-    home.hidden=showApie;apie.hidden=!showApie;
-    const v=showApie?apie:home;restart(v);reveal(v.id);
-    if(!showApie)renderTeaser();
-    scrollTo(0,0);
+    if(cur===null||wasGame)applyView(target);else swap(()=>applyView(target));
+    cur=target;
   }
   addEventListener('hashchange',route);
   addEventListener('keydown',e=>{if(e.key==='Escape'&&location.hash==='#zaisti')location.hash='#'});
@@ -1082,11 +1268,93 @@ reset();
     }catch(e){if(e&&e.name!=='AbortError')say(url)}
   }));
 
+  // ===== efektai =====
+  const rootStyle=document.documentElement.style;
+
+  // antraštės raidės (bangos efektas)
+  $$('h1 em').forEach(em=>{
+    const t=em.textContent;em.setAttribute('aria-label',t);em.textContent='';
+    [...t].forEach((ch,i)=>{const b=document.createElement('b');b.textContent=ch;b.style.setProperty('--i',i);b.setAttribute('aria-hidden','true');em.append(b)});
+  });
+  if(!RM)setInterval(()=>{
+    if(document.hidden)return;
+    const em=document.querySelector('.view:not([hidden]) h1 em');
+    if(!em)return;em.classList.remove('jolt');void em.offsetWidth;em.classList.add('jolt');
+  },6500);
+
+  // juostų tekstas
+  const tp=['BALSUOK UŽ LAURYNĄ','★','MOKYKLA PATI SAVĘS NESUORGANIZUOS','★','KLAUSYSIU · DARYSIU · RODYSIU','★'];
+  const tpl=tp.map(t=>'<span>'+t+'</span>').join('');
+  $$('.tape>div').forEach(d=>{d.innerHTML=tpl+tpl+tpl+tpl});
+
+  // žymeklis ir parallax (tik kompiuteriui)
+  if(!coarse&&!RM){
+    let px=0,py=0,tx=-100,ty=-100,x=-100,y=-100,pend=false;
+    const c=$('#curs');
+    addEventListener('pointermove',e=>{
+      tx=e.clientX;ty=e.clientY;c.classList.add('on');
+      px=(e.clientX/innerWidth-.5)*2;py=(e.clientY/innerHeight-.5)*2;
+      if(!pend){pend=true;requestAnimationFrame(()=>{pend=false;rootStyle.setProperty('--px',px.toFixed(3));rootStyle.setProperty('--py',py.toFixed(3))})}
+    },{passive:true});
+    document.documentElement.addEventListener('pointerleave',()=>c.classList.remove('on'));
+    document.addEventListener('pointerover',e=>{c.classList.toggle('big',!!(e.target.closest&&e.target.closest('a,button,.cand,.cut')))});
+    (function loop(){x+=(tx-x)*.2;y+=(ty-y)*.2;c.style.translate=x+'px '+y+'px';requestAnimationFrame(loop)})();
+    // magnetiniai mygtukai
+    $$('.go,.pill,.back,.btn').forEach(el=>{
+      el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.translate=((e.clientX-r.left-r.width/2)*.07)+'px '+((e.clientY-r.top-r.height/2)*.12)+'px'});
+      el.addEventListener('pointerleave',()=>{el.style.translate=''});
+    });
+  }
+
+  // X antspaudas paspaudus bet kur
+  const XS='<svg viewBox="0 0 60 60"><path d="M10 10L50 50M50 10L10 50" stroke="#111" stroke-width="15" fill="none"/><path d="M10 10L50 50M50 10L10 50" stroke="#F6ECDD" stroke-width="6" fill="none"/></svg>';
+  addEventListener('pointerdown',e=>{
+    if(RM||document.body.classList.contains('playing')||document.documentElement.classList.contains('intro'))return;
+    if(e.target.closest&&e.target.closest('input,textarea'))return;
+    const el=document.createElement('div');el.className='xs';el.innerHTML=XS;
+    el.style.left=e.clientX+'px';el.style.top=e.clientY+'px';
+    document.body.append(el);setTimeout(()=>el.remove(),700);
+  },{passive:true});
+
+  // konfeti
+  function confetti(x,y,n){
+    if(RM)return;
+    const cols=['#F6ECDD','#111','#D4161B'];
+    for(let i=0;i<n;i++){
+      const p=document.createElement('i'),sz=6+Math.random()*10;
+      p.className='cf';
+      p.style.cssText='left:'+x+'px;top:'+y+'px;width:'+sz+'px;height:'+sz+'px;background:'+cols[i%3]+';'+(i%4===0?'border-radius:50%;':'')+(i%3===1?'outline:2px solid #F6ECDD;':'');
+      document.body.append(p);
+      const a=Math.random()*Math.PI*2,v=120+Math.random()*340,dx=Math.cos(a)*v,dy=Math.sin(a)*v-160;
+      p.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+dx+'px,'+(dy+420)+'px) rotate('+(Math.random()*720-360)+'deg)',opacity:0}],
+        {duration:900+Math.random()*700,easing:'cubic-bezier(.15,.7,.4,1)'}).onfinish=()=>p.remove();
+    }
+  }
+  // antspaudas "ĮSKAITYTA" ir biuletenio krestelėjimas
+  function slamStamp(){
+    const st=$('#stamp'),b=$('#ballot');
+    st.classList.remove('on');void st.offsetWidth;st.classList.add('on');
+    if(!RM)b.animate([{translate:'0 0'},{translate:'-8px 3px'},{translate:'7px -3px'},{translate:'-4px 2px'},{translate:'0 0'}],{duration:380});
+  }
+  // garsas
+  let ac;
+  function thunk(){
+    try{
+      ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+      const t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();
+      o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(40,t+.18);
+      g.gain.setValueAtTime(.45,t);g.gain.exponentialRampToValueAtTime(.001,t+.24);
+      o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.26);
+    }catch(e){}
+  }
+  // portretas: konfeti
+  $$('.cut').forEach(i=>i.addEventListener('click',e=>{confetti(e.clientX,e.clientY,34);say('Ačiū, kad žiūri!')}));
+
   route();
 
   // įžanga
   const introEl=$('#intro');let introT1,introT2;
-  function restartHome(){$$('#home h1 .ln>*, #home .ballot').forEach(restart)}
+  function restartHome(){$$('#home h1 .ln>*, #home .ballot, #home .eyebrow, #home .lead, #home .cut, #home .prog i').forEach(restart)}
   function endIntro(fast){
     clearTimeout(introT1);clearTimeout(introT2);
     restartHome();
