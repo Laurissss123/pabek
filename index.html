@@ -454,6 +454,13 @@ h1 em.jolt{animation:jolt .35s}
 }
 @media(max-width:420px){.ballot{--sw:76px}.spin{top:-40px}}
 @media(max-width:350px){.ballot{--sw:60px}.spin{top:-34px}.stub{font-size:10px;letter-spacing:1px}}
+
+/* diakritikai nebesikerta su eilute aukščiau */
+.quote{line-height:1.28}
+.quote span,.quote em{padding-top:.08em}
+.quote em{margin-top:.18em;padding-top:.14em;padding-bottom:.04em}
+h1{line-height:1.06}
+h1 .ln{padding-top:.12em;margin-top:-.12em}
 /* žaidimas */
 #game{position:fixed;inset:0;height:100vh;height:100dvh;z-index:50;background:#0a0204;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #game[hidden]{display:none}
