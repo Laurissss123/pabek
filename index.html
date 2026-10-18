@@ -425,6 +425,35 @@ h1 em.jolt{animation:jolt .35s}
   .cut-line{margin-top:6px;padding:10px 0 6px}
   .said.on{padding:6px 0 0}
 }
+
+/* ===== pataisymai po vizualinės patikros ===== */
+.eyebrow{white-space:nowrap}
+@media(max-width:1100px){.eyebrow{letter-spacing:3px;font-size:12px}}
+.tapes{height:270px}
+.tape.a{top:56px}
+.tape.b{top:112px}
+.acts .go:not(.k){border-color:var(--c)}
+.quote em{padding-top:.1em}
+.quote span,.quote em{clip-path:inset(-.25em 100% -.25em -.1em)}
+.why.in .quote span,.why.in .quote em{clip-path:inset(-.25em -.1em -.25em -.1em)}
+.i-snd{top:auto;left:50%;bottom:22px;translate:-50% 0;white-space:nowrap}
+@keyframes sndp{to{scale:1.07}}
+@media(max-width:600px){
+  .eyebrow{font-size:11px;letter-spacing:2px;gap:8px}
+  .eyebrow::before{width:22px;height:5px}
+  .stub{font-size:10.5px;letter-spacing:1.5px}
+  .stub span{white-space:nowrap}
+  .stub b{font-size:15px;letter-spacing:1px}
+  .cut-line{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cut-line>span:first-child{grid-column:1/-1}
+  .cut-line>span:last-child{display:contents}
+  .cut-line .pill{width:100%;text-align:center;padding:14px 8px}
+  .tapes{height:230px}
+  .tape.a{top:44px}
+  .tape.b{top:92px}
+}
+@media(max-width:420px){.ballot{--sw:76px}.spin{top:-40px}}
+@media(max-width:350px){.ballot{--sw:60px}.spin{top:-34px}.stub{font-size:10px;letter-spacing:1px}}
 /* žaidimas */
 #game{position:fixed;inset:0;height:100vh;height:100dvh;z-index:50;background:#0a0204;display:flex;flex-direction:column;align-items:center;justify-content:center}
 #game[hidden]{display:none}
@@ -534,7 +563,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
       <div class="deco" aria-hidden="true">
         <div class="big" style="left:-4%;top:6%;--d:-12">GMT</div>
         <div class="sq" style="--s:80px;right:6%;top:12%;--d:24;--r0:10deg"></div>
-        <div class="xx" style="--s:96px;right:30%;top:46%;--d:-16"><svg viewBox="0 0 60 60"><path d="M8 8L52 52M52 8L8 52"/></svg></div>
+        <div class="xx" style="--s:96px;left:8%;top:74%;--d:-16"><svg viewBox="0 0 60 60"><path d="M8 8L52 52M52 8L8 52"/></svg></div>
         <div class="st" style="--s:40px;right:12%;top:64%;--d:26">★</div>
       </div>
       <aside><img class="cut" data-photo alt="Laurynas"></aside>
@@ -549,7 +578,7 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
         </dl>
 
         <section class="why rv">
-          <h2>Kodėl „Mokykla pati savęs nesuorganizuos"</h2>
+          <h2>Kodėl „Mokykla pati savęs nesuorganizuos“</h2>
           <p class="quote"><span>Niekas nepasikeičia pats.</span><span>Kažkas turi paimti ir sutvarkyti.</span><em>Aš noriu būti tuo žmogumi, kuris tai padaro.</em></p>
         </section>
       </div>
@@ -800,7 +829,7 @@ function spawn(){
 /* ================= BOSAS ================= */
 function startBoss(){
   boss={x:W+260,hp:100,fireT:2,t:0,hit:0,eye:0};
-  banner={t:2.4,txt:'BOSAS: KONKURENTAS',col:HOT};
+  banner={t:2.4,txt:'BOSAS: KONKURENTAS',col:CREAM};
   shake=16;flash=.5;sfx.boss();
 }
 function bossFire(){
@@ -1235,7 +1264,8 @@ function banners(){
   if(banner.t>0){
     const a=Math.min(1,banner.t*2);
     ctx.globalAlpha=a;
-    text(banner.txt,W/2,H/2-20,56,banner.col,'center',28);
+    ctx.font='900 56px "Arial Black",Impact,sans-serif';ctx.textAlign='center';ctx.lineJoin='round';ctx.lineWidth=14;ctx.strokeStyle='#111';ctx.strokeText(banner.txt,W/2,H/2-20);
+    text(banner.txt,W/2,H/2-20,56,banner.col,'center',0);
     ctx.globalAlpha=1;
   }
 }
@@ -1264,7 +1294,7 @@ function drawDead(){
   text(score>=best&&score>0?'★ NAUJAS REKORDAS! ★':'Rekordas: '+best,cx,295,18,score>=best&&score>0?GOLD:'#ffb38a','center');
   if(unlockMsg)text(unlockMsg,cx,325,16,ICE,'center',8);
   if(deadT>.5)text(coarse?'( paliesk ir bandyk dar )':'( paspausk ir bandyk dar )',cx,H-36,18,CREAM,'center');
-  drawBoard(W*.6,100,W*.34,8);
+  drawBoard(W*.6,168,W*.34,8);
 }
 function draw(){
   ctx.save();
