@@ -125,38 +125,89 @@ h1 em{font-style:normal;color:var(--k);background:var(--c);padding:0 12px;displa
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 
-/* ===== įžanga ===== */
-#intro{position:fixed;inset:0;z-index:100;background:var(--k);display:none;overflow:hidden;animation:iOut .4s 4.3s forwards}
+/* ===== įžanga (≈8,8 s) ===== */
+#intro{position:fixed;inset:0;z-index:100;background:var(--k);display:none;overflow:hidden;animation:iOut .5s 8.3s forwards}
 html.intro #intro{display:block}
 html.intro,html.intro body{overflow:hidden}
 #intro.fast{animation:none;opacity:0;transition:opacity .25s}
 @keyframes iOut{to{opacity:0;visibility:hidden}}
+.i-flash,.i-bg,.i-count,.i-cam,.i-wipe,.i-title{position:absolute;inset:0}
+.i-flash{background:var(--r);opacity:0;animation:fl .62s .25s 3}
+@keyframes fl{0%{opacity:.38}100%{opacity:0}}
+
+/* 1) atgalinis skaičiavimas 3-2-1 */
+.i-count{display:flex;align-items:center;justify-content:center;animation:iFadeQ .3s 2s forwards}
+.i-count b{position:absolute;font-family:Anton,sans-serif;font-weight:400;font-size:min(52vw,420px);line-height:1;color:var(--c);opacity:0;animation:num .62s cubic-bezier(.2,1.3,.4,1) both}
+.i-count b:nth-of-type(1){animation-delay:.25s}
+.i-count b:nth-of-type(2){animation-delay:.87s}
+.i-count b:nth-of-type(3){animation-delay:1.49s;color:var(--r)}
+@keyframes num{0%{opacity:0;transform:scale(2.3) rotate(-8deg)}18%{opacity:1;transform:scale(1) rotate(0)}80%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(.6)}}
+.i-ring{position:absolute;width:min(78vmin,560px);height:min(78vmin,560px);transform:rotate(-90deg)}
+.i-ring circle{fill:none;stroke:var(--c);stroke-width:5;stroke-dasharray:566;stroke-dashoffset:566;animation:ring 1.9s .25s linear forwards}
+@keyframes ring{to{stroke-dashoffset:0}}
+@keyframes iFadeQ{to{opacity:0}}
+
+/* 2) mozaika ir žodžių "smūgiai" */
+.i-bg i{position:absolute;background:#1c1c1c;opacity:0;transform:scale(.3) rotate(var(--r));animation:mIn .4s var(--d) both,mOut .5s 4.3s forwards}
+@keyframes mIn{to{opacity:1;transform:scale(1) rotate(var(--r))}}
+@keyframes mOut{to{opacity:0}}
 .i-words{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-  font-family:Anton,sans-serif;text-transform:uppercase;font-size:clamp(46px,12.5vw,128px);line-height:1.02;color:var(--c);animation:iFade .35s 1.9s forwards}
-.i-words span{display:block;overflow:hidden;padding:0 8px}
-.i-words i{font-style:normal;display:inline-block;animation:slam .6s cubic-bezier(.2,1.25,.3,1) both}
-.i-words span:nth-child(2) i{animation-delay:.18s}.i-words span:nth-child(3) i{animation-delay:.36s}
+  font-family:Anton,sans-serif;text-transform:uppercase;font-size:clamp(46px,12.5vw,130px);line-height:1.02;color:var(--c);animation:iFade .45s 4.15s forwards}
+.i-words span{display:block;padding:0 8px}
+.i-words i{font-style:normal;display:inline-block;opacity:0;animation:slamL .6s cubic-bezier(.2,1.25,.3,1) 2.1s both}
+.i-words span:nth-child(2) i{animation-name:slamR;animation-delay:2.45s}
+.i-words span:nth-child(3) i{animation-delay:2.8s}
 .i-words .r i{background:var(--r);padding:0 14px;margin-top:6px}
-@keyframes slam{from{transform:translateY(118%) rotate(7deg)}to{transform:none}}
-@keyframes iFade{to{opacity:0;transform:scale(.94)}}
-.i-stage{position:absolute;left:50%;top:50%;width:min(76vw,460px);margin-left:calc(min(76vw,460px)/-2);transform:translateY(-45%);opacity:0;animation:rise .65s cubic-bezier(.2,1.1,.3,1) 2.05s forwards}
+@keyframes slamL{from{opacity:0;transform:translateX(-120vw) rotate(-8deg) skewX(22deg)}55%{opacity:1}to{opacity:1;transform:none}}
+@keyframes slamR{from{opacity:0;transform:translateX(120vw) rotate(8deg) skewX(-22deg)}55%{opacity:1}to{opacity:1;transform:none}}
+@keyframes iFade{to{opacity:0;transform:scale(1.12);filter:blur(6px)}}
+
+/* 3) balsavimo urna */
+.i-cam{animation:cam .5s 6.38s}
+@keyframes cam{15%{translate:-12px 7px}30%{translate:10px -8px}45%{translate:-8px 5px}60%{translate:6px -3px}80%{translate:-3px 2px}}
+.i-stage{position:absolute;left:50%;top:50%;width:min(76vw,460px);margin-left:calc(min(76vw,460px)/-2);transform:translateY(-45%);opacity:0;animation:rise .7s cubic-bezier(.2,1.1,.3,1) 4.5s forwards}
 @keyframes rise{from{opacity:0;transform:translateY(20%)}to{opacity:1;transform:translateY(-45%)}}
 .i-slot{height:min(46vmin,250px);position:relative;overflow:hidden}
 .i-ballot{position:absolute;left:50%;bottom:0;width:min(19vmin,98px);margin-left:calc(min(19vmin,98px)/-2);aspect-ratio:3/4;background:var(--c);border:5px solid var(--c);outline:3px solid var(--k);
-  display:flex;align-items:center;justify-content:center;transform:translateY(-230%) rotate(-18deg);animation:cast .62s cubic-bezier(.5,0,.9,.6) 2.5s forwards}
+  display:flex;align-items:center;justify-content:center;transform:translateY(-230%) rotate(-18deg);animation:cast 1.55s 4.85s forwards}
 .i-ballot svg{width:70%;height:auto}
-.i-ballot path{fill:none;stroke:var(--r);stroke-width:9;stroke-linecap:square}
+.i-ballot path{fill:none;stroke:var(--r);stroke-width:9;stroke-linecap:square;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .3s 5.35s forwards}
+.i-ballot path+path{animation-delay:5.55s}
+@keyframes draw{to{stroke-dashoffset:0}}
 .i-ballot::before{content:"";position:absolute;left:12%;right:12%;top:12%;height:6px;background:var(--k);box-shadow:0 14px 0 var(--k)}
-@keyframes cast{0%{transform:translateY(-230%) rotate(-18deg)}55%{transform:translateY(-25%) rotate(5deg)}100%{transform:translateY(110%) rotate(0)}}
-.i-chest{position:relative;background:var(--c);color:var(--k);text-align:center;box-shadow:12px 12px 0 var(--r);padding:12px 0 0;animation:bump .45s 3.08s}
+@keyframes cast{
+  0%{transform:translateY(-230%) rotate(-18deg);animation-timing-function:cubic-bezier(.2,1,.3,1)}
+  30%{transform:translateY(-70%) rotate(3deg)}
+  62%{transform:translateY(-78%) rotate(-2deg);animation-timing-function:cubic-bezier(.6,0,.9,.5)}
+  100%{transform:translateY(112%) rotate(0)}
+}
+.i-chest{position:relative;background:var(--c);color:var(--k);text-align:center;box-shadow:12px 12px 0 var(--r);padding:12px 0 0;animation:bump .45s 6.38s}
 .i-chest::before{content:"";position:absolute;left:50%;top:-5px;width:44%;height:12px;margin-left:-22%;background:var(--k)}
 .i-chest b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:min(18.5vw,118px);line-height:1.15;text-transform:uppercase;letter-spacing:1px}
-.i-chest em{font-style:normal;animation:glow .3s 3.1s forwards}
+.i-chest em{font-style:normal;animation:glow .3s 6.4s forwards}
 @keyframes bump{30%{transform:scale(1.06,.93) rotate(-1.2deg)}65%{transform:scale(.98,1.03) rotate(.6deg)}}
 @keyframes glow{to{color:var(--r);text-shadow:0 0 14px var(--r),0 0 34px var(--r)}}
-.i-wipe{position:absolute;inset:0;background:var(--r);clip-path:circle(0 at 50% 55%);animation:wipe .8s cubic-bezier(.7,0,.25,1) 3.4s forwards}
+.i-shock{position:absolute;left:50%;top:55%;width:40px;height:40px;margin:-20px 0 0 -20px;border:6px solid var(--c);border-radius:50%;opacity:0;animation:shock .9s 6.38s ease-out}
+@keyframes shock{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(42)}}
+.i-burst{position:absolute;left:50%;top:55%}
+.i-burst i{position:absolute;display:block;opacity:0;background:var(--c);animation:burst .95s 6.4s cubic-bezier(.1,.8,.3,1) forwards}
+.i-burst i:nth-child(3n){background:var(--r)}
+.i-burst i:nth-child(4n){border-radius:50%}
+@keyframes burst{from{opacity:1;translate:0 0;rotate:0deg}to{opacity:0;translate:var(--dx) var(--dy);rotate:var(--rot)}}
+
+/* 4) raudona užuolaida ir pavadinimas */
+.i-wipe{background:var(--r);clip-path:circle(0 at 50% 55%);animation:wipe .8s cubic-bezier(.7,0,.25,1) 6.75s forwards}
 @keyframes wipe{to{clip-path:circle(150vmax at 50% 55%)}}
-.i-skip{position:absolute;right:16px;top:16px;z-index:3;background:none;color:var(--c);border:3px solid var(--c);padding:9px 14px;font-size:12px;letter-spacing:3px;text-transform:uppercase}
+.i-title{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;pointer-events:none}
+.i-title .band{font-family:Anton,sans-serif;font-size:clamp(44px,12.5vw,132px);line-height:1.05;text-transform:uppercase;padding:0 22px;opacity:0;white-space:nowrap}
+.i-title .a{background:var(--c);color:var(--k);transform:rotate(-2.2deg);animation:bandL .6s cubic-bezier(.2,1.2,.3,1) 7.45s forwards}
+.i-title .b{background:var(--k);color:var(--c);transform:rotate(1.8deg);animation:bandR .6s cubic-bezier(.2,1.2,.3,1) 7.62s forwards}
+@keyframes bandL{from{opacity:0;transform:translateX(-110vw) rotate(-8deg)}to{opacity:1;transform:rotate(-2.2deg)}}
+@keyframes bandR{from{opacity:0;transform:translateX(110vw) rotate(8deg)}to{opacity:1;transform:rotate(1.8deg)}}
+.i-snd{display:none;position:absolute;left:16px;top:16px;z-index:5;background:var(--r);color:var(--c);border:3px solid var(--c);padding:9px 14px;font-size:12px;letter-spacing:3px;text-transform:uppercase;animation:sndp 1.1s ease-in-out infinite alternate}
+.i-snd.need{display:block}
+@keyframes sndp{to{transform:scale(1.07)}}
+.i-skip{position:absolute;right:16px;top:16px;z-index:5;background:none;color:var(--c);border:3px solid var(--c);padding:9px 14px;font-size:12px;letter-spacing:3px;text-transform:uppercase}
 .i-skip:hover{background:var(--c);color:var(--k)}
 
 /* ===== papildomi efektai ===== */
@@ -542,12 +593,24 @@ try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches&&location.hash!=='
 
 <div id="intro" role="presentation"></div>
 <template id="introTpl">
-  <div class="i-words" aria-hidden="true"><span><i>Mokykla</i></span><span><i>pati savęs</i></span><span class="r"><i>nesuorganizuos.</i></span></div>
-  <div class="i-stage" aria-hidden="true">
-    <div class="i-slot"><div class="i-ballot"><svg viewBox="0 0 60 60"><path d="M12 12 L48 48"/><path d="M48 12 L12 48"/></svg></div></div>
-    <div class="i-chest"><b>Balsu<em>o</em>k</b></div>
+  <div class="i-flash"></div>
+  <div class="i-bg" aria-hidden="true"></div>
+  <div class="i-count" aria-hidden="true">
+    <svg class="i-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="90"/></svg>
+    <b>3</b><b>2</b><b>1</b>
+  </div>
+  <div class="i-cam" aria-hidden="true">
+    <div class="i-words"><span><i>Mokykla</i></span><span><i>pati savęs</i></span><span class="r"><i>nesuorganizuos.</i></span></div>
+    <div class="i-stage">
+      <div class="i-slot"><div class="i-ballot"><svg viewBox="0 0 60 60"><path d="M12 12 L48 48"/><path d="M48 12 L12 48"/></svg></div></div>
+      <div class="i-chest"><b>Balsu<em>o</em>k</b></div>
+    </div>
+    <div class="i-shock"></div>
+    <div class="i-burst"></div>
   </div>
   <div class="i-wipe"></div>
+  <div class="i-title" aria-hidden="true"><div class="band a">Balsuok už</div><div class="band b">Lauryną</div></div>
+  <button class="i-snd">♪ Įjungti garsą</button>
   <button class="i-skip">Praleisti →</button>
 </template>
 <div class="toast" id="toast"></div>
@@ -1453,19 +1516,109 @@ reset();
   function restartHome(){$$('#home h1 .ln>*, #home .ballot, #home .ballot>*, #home .eyebrow, #home .lead, #home .cut, #home .prog i').forEach(restart);setTimeout(rollSerial,500)}
   function endIntro(fast){
     clearTimeout(introT1);clearTimeout(introT2);
+    stopIntroSound(fast);
     restartHome();
     if(fast)introEl.classList.add('fast');
     setTimeout(()=>{document.documentElement.classList.remove('intro');introEl.textContent='';introEl.classList.remove('fast')},fast?280:560);
   }
+
+  // ===== įžangos garsas (sintezuotas, sinchronizuotas su animacija) =====
+  let iac=null,introOut=null,sndOn=false;
+  function stopIntroSound(fast){
+    if(!introOut||!iac)return;
+    try{introOut.gain.cancelScheduledValues(iac.currentTime);introOut.gain.setTargetAtTime(0,iac.currentTime,fast?.04:.3)}catch(e){}
+    introOut=null;
+  }
+  function introSound(elapsed){
+    if(!iac)return;
+    stopIntroSound(true);sndOn=true;
+    const ac=iac,t0=ac.currentTime-elapsed+.06;
+    const out=ac.createGain();out.gain.value=.6;
+    const comp=ac.createDynamicsCompressor();out.connect(comp);comp.connect(ac.destination);introOut=out;
+    const nb=ac.createBuffer(1,ac.sampleRate*2,ac.sampleRate),nd=nb.getChannelData(0);
+    for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+    const fut=x=>x>=elapsed-.03;
+    const tone=(x,f,d,type,v,f2)=>{
+      if(!fut(x))return;
+      const o=ac.createOscillator(),g=ac.createGain(),t=t0+x;
+      o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);
+      o.connect(g).connect(out);o.start(t);o.stop(t+d+.05);
+    };
+    const noise=(x,d,v,type,f1,f2,q)=>{
+      if(!fut(x))return;
+      const sr=ac.createBufferSource(),fl=ac.createBiquadFilter(),g=ac.createGain(),t=t0+x;
+      sr.buffer=nb;fl.type=type;fl.frequency.setValueAtTime(f1,t);if(f2)fl.frequency.exponentialRampToValueAtTime(f2,t+d);if(q)fl.Q.value=q;
+      g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+Math.min(.05,d/2));g.gain.exponentialRampToValueAtTime(.0001,t+d);
+      sr.connect(fl).connect(g).connect(out);sr.start(t);sr.stop(t+d+.05);
+    };
+    const kick=(x,v)=>{v=v||.9;tone(x,150,.28,'sine',v,40);noise(x,.05,v*.25,'highpass',3000)};
+    // 1) atgalinis skaičiavimas
+    [.25,.87].forEach(x=>{kick(x,.8);tone(x,1200,.05,'square',.12)});
+    kick(1.49,1.1);tone(1.49,1760,.14,'square',.18);
+    noise(1.5,.62,.32,'bandpass',300,6000,2);tone(1.5,200,.62,'sawtooth',.1,900);
+    // 2) žodžių smūgiai
+    [[2.1,130],[2.45,165],[2.8,196]].forEach(a=>{kick(a[0],1);noise(a[0],.14,.5,'lowpass',2500,300);tone(a[0],a[1],.22,'sawtooth',.16,a[1]/2)});
+    // griovelis
+    for(let x=3.1;x<4.3;x+=.5){kick(x,.7);tone(x,55,.45,'triangle',.5)}
+    for(let x=3.1;x<4.3;x+=.25)noise(x,.04,.1,'highpass',7000);
+    noise(4.15,.45,.3,'bandpass',4000,500,1);
+    // 3) urna
+    noise(4.5,.7,.3,'bandpass',300,3000,1.2);tone(4.5,90,.7,'sine',.35,180);
+    noise(4.85,.45,.22,'bandpass',2500,500,1.5);
+    noise(5.35,.28,.26,'highpass',2500);noise(5.55,.28,.26,'highpass',2800);
+    tone(5.82,1100,.56,'sine',.18,220);noise(5.82,.56,.2,'bandpass',3500,600,1);
+    kick(6.38,1.3);tone(6.38,70,.9,'sine',1,28);noise(6.38,.7,.7,'lowpass',2200,120);
+    tone(6.38,880,1.2,'triangle',.22);tone(6.38,1320,1,'triangle',.14);
+    for(let i=0;i<10;i++)tone(6.42+i*.045,1200+((i*377)%2000),.12,'triangle',.07);
+    // 4) užuolaida ir pavadinimas
+    noise(6.75,.8,.42,'highpass',500,8000);tone(6.75,220,.8,'sawtooth',.12,1760);
+    kick(7.45,1.1);noise(7.45,.2,.5,'lowpass',1800,200);
+    kick(7.62,1.1);noise(7.62,.2,.5,'lowpass',1800,200);
+    [220,277.2,329.6,440].forEach(f=>tone(7.7,f,1.4,'sawtooth',.07));
+    [880,1109,1319,1760].forEach((f,i)=>tone(7.8+i*.08,f,.25,'triangle',.1));
+  }
+  let introStart=0;
   function runIntro(){
     try{sessionStorage.setItem('laurynas-intro','1')}catch(e){}
     introEl.classList.remove('fast');
     introEl.innerHTML=$('#introTpl').innerHTML;
+    // mozaika
+    const bg=introEl.querySelector('.i-bg');
+    for(let i=0;i<40;i++){
+      const r=document.createElement('i');
+      r.style.cssText='left:'+(Math.random()*100-4)+'%;top:'+(Math.random()*100-4)+'%;width:'+(40+Math.random()*130)+'px;height:'+(30+Math.random()*95)+'px;--r:'+(Math.random()*44-22).toFixed(1)+'deg;--d:'+(2+Math.random()*.8).toFixed(2)+'s';
+      bg.append(r);
+    }
+    // sprogimas iš urnos
+    const bu=introEl.querySelector('.i-burst');
+    for(let i=0;i<22;i++){
+      const p=document.createElement('i'),sz=8+Math.random()*16,a=Math.random()*Math.PI*2,d=140+Math.random()*(Math.min(innerWidth,innerHeight)*.55);
+      p.style.cssText='width:'+sz+'px;height:'+(sz*(i%2?1:1.3))+'px;--dx:'+Math.round(Math.cos(a)*d)+'px;--dy:'+Math.round(Math.sin(a)*d-40)+'px;--rot:'+Math.round(Math.random()*720-360)+'deg';
+      bu.append(p);
+    }
     document.documentElement.classList.add('intro');
-    introEl.querySelector('.i-skip').addEventListener('click',()=>endIntro(true));
-    introT1=setTimeout(restartHome,4150);
-    introT2=setTimeout(()=>endIntro(false),4750);
+    introStart=performance.now();sndOn=false;
+    const snd=introEl.querySelector('.i-snd');
+    const elapsed=()=>(performance.now()-introStart)/1000;
+    try{
+      iac=iac||new (window.AudioContext||window.webkitAudioContext)();
+      iac.onstatechange=()=>{if(iac.state==='running'&&!sndOn&&document.documentElement.classList.contains('intro')){snd.classList.remove('need');introSound(elapsed())}};
+      if(iac.state==='running')introSound(0);
+      else{iac.resume();setTimeout(()=>{if(!sndOn&&document.documentElement.classList.contains('intro'))snd.classList.add('need')},350)}
+      snd.addEventListener('click',ev=>{ev.stopPropagation();iac.resume().then(()=>{if(!sndOn)introSound(elapsed());snd.classList.remove('need')})});
+    }catch(e){}
+    introT1=setTimeout(restartHome,8100);
+    introT2=setTimeout(()=>endIntro(false),8900);
   }
+  // praleisti: mygtukas, paspaudimas (po 0,8 s), Esc / tarpas / Enter
+  introEl.addEventListener('click',e=>{
+    if(!document.documentElement.classList.contains('intro'))return;
+    if(e.target.closest('.i-skip')||performance.now()-introStart>800)endIntro(true);
+  });
+  addEventListener('keydown',e=>{
+    if(document.documentElement.classList.contains('intro')&&(e.key==='Escape'||e.key===' '||e.key==='Enter'))endIntro(true);
+  });
   $$('[data-replay]').forEach(b=>b.addEventListener('click',()=>{scrollTo(0,0);runIntro()}));
   if(document.documentElement.classList.contains('intro'))runIntro();
 })();
